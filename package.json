@@ -1,0 +1,47 @@
+{
+  "name": "xigua-cli",
+  "version": "1.0.0",
+  "description": "front-end scaffolding tool for serving xigua company",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "webpack",
+    "react",
+    "node",
+    "jest",
+    "eslint"
+  ],
+  "registry": {
+    "git": "https://github.com/CuveeCui/xigua-cli.git"
+  },
+  "engine": {
+    "node": ">=8.0.0"
+  },
+  "author": "cuizaiyong <cuizaiyong@xigua.city>",
+  "bin": {
+    "xigua": "./bin/xigua",
+    "xigua-init": "./bin/xigua-init"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "async": "^2.6.1",
+    "chalk": "^2.4.1",
+    "cli-prompt": "^0.6.0",
+    "commander": "^2.19.0",
+    "consolidate": "^0.15.1",
+    "download-git-repo": "^1.1.0",
+    "handlebars": "^4.0.12",
+    "inquirer": "^6.2.0",
+    "metalsmith": "^2.3.0",
+    "minimatch": "^3.0.4",
+    "multimatch": "^2.1.0",
+    "ora": "^3.0.0",
+    "read-metadata": "^1.0.0",
+    "rimraf": "^2.6.2",
+    "semver": "^5.6.0",
+    "tildify": "^1.2.0",
+    "user-home": "^2.0.0"
+  }
+}

@@ -1,0 +1,131 @@
+#!/usr/bin/env node
+
+const chalk = require('chalk');
+const ora = require('ora');
+const { prompt } = require('inquirer');
+const program = require('commander');
+const logger = require('../lib/logger');
+const rm = require('rimraf');
+const download = require('download-git-repo');
+const Compile = require('../lib/compile');
+const fs = require('fs');
+const path = require('path');
+const home = require('user-home');
+const { check } = require('../lib/node-version');
+
+/**
+ * Usage
+ */
+program
+  .usage('<project-name>')
+  .option('-c,--clone', 'use git clone')
+  .option('-l,--local', 'use local template')
+
+/**
+ * Help
+ */
+program
+  .on('--help', () => {
+    console.log('  Examples:')
+    console.log()
+    console.log(chalk.gray('    # create a new project with an official template'))
+    console.log('    $ xigua init my-project')
+  })
+
+/**
+ * Check if content inputed is correct
+ * @returns {never}
+ */
+function checkInput() {
+  program.parse(process.argv);
+  if (program.args.length < 0) return program.help();
+}
+
+checkInput();
+
+/**
+ * handle params
+ */
+const rawName = program.args[0];
+const isName = !rawName || rawName === '';
+const name = isName ? path.relative('../', process.cwd()) : rawName;
+const [
+  to,
+  tmp
+] = [
+  path.resolve(rawName || ''),
+  path.join(home, '.xigua_templates')
+]
+if (program.local) {
+  console.log(`> Use local template at ${chalk.yellow(tmp)}`);
+}
+if (isName || fs.existsSync(to)) {
+  prompt([
+    {
+      type: 'confirm',
+      message: isName
+        ? 'Generate project in current directory?'
+        : 'Target directory exists. Continue?',
+      name: 'ok'
+    }
+  ]).then(answers => {
+    if (answers.ok) {
+      run();
+    }
+  }).catch(logger.fatal)
+} else {
+  run();
+}
+
+/**
+ * main function
+ * @returns {Promise<void>}
+ */
+async function run() {
+  // heck node version
+  if (!check()) return
+
+  // Determine if you want to download the template
+  program.local ? directCompile() : goDownLoad();
+}
+
+async function directCompile() {
+  // Determine if this is a local file
+  if (fs.existsSync(tmp)) {
+    try {
+      await new Compile(name, to, tmp).init();
+      logger.success('Generate "%s".', name);
+    } catch(e) {
+      logger.fatal(e);
+    }
+  } else {
+    logger.fatal('Local template "%s" not found', tmp);
+  }
+}
+async function goDownLoad() {
+  console.log();
+  const spinner = ora('downloading template');
+  spinner.start();
+  // If the template exists, delete it first
+  if (fs.existsSync(tmp)) rm.sync(tmp);
+  // download template from github
+  download('direct:https://github.com/CuveeCui/pizza.git', tmp, { clone: true }, async err => {
+    spinner.stop();
+    if (err) logger.fatal(`Fail to download: ${err}`);
+    try {
+      await new Compile(name, to, tmp).init();
+      logger.success('Generate "%s".', name);
+    } catch(e) {
+      logger.fatal(e);
+    }
+  })
+
+}
+
+
+
+
+
+
+
+
