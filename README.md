@@ -1,4 +1,4 @@
-## xigua-cli
+## xigua_cli
 基于`webpack4+`，服务于**西瓜创客**的前端`react`单页面应用，以实现工程化的脚手架工具。
 ### Installation
 `Node.js`: >=8.x
