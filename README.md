@@ -3,9 +3,9 @@
 ### Installation
 `Node.js`: >=8.x
 ```
-$ yarn global add xigua-cli
+$ yarn global add xigua_cli
 or
-$ npm install xigua-cli -g
+$ npm install xigua_cli -g
 ```
 ###Usage
 ```

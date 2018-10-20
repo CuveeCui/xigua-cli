@@ -1,5 +1,5 @@
 {
-  "name": "xigua-cli",
+  "name": "xigua_cli",
   "version": "1.0.0",
   "description": "front-end scaffolding tool for serving xigua company",
   "main": "index.js",
