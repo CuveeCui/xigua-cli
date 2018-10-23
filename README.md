@@ -29,6 +29,7 @@ $ xigua init <project-name> --local
 ? Project description - 项目的描述
 ? Use sentry to your code? (Y/n) - 是否使用sentry 默认true
 ? Use sensor to your code? (Y/n) - 是否使用sensor 默认是true
+? Compatible your code to IE? (Y/n) - 是否兼容IE9 默认是false
 ```
 ### build
 所有的 `build` 过程都是由 `webpack` 完成。
