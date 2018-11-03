@@ -12,6 +12,7 @@ const fs = require('fs');
 const path = require('path');
 const home = require('user-home');
 const { check } = require('../lib/node-version');
+const config = require('./config');
 
 /**
  * Usage
@@ -109,7 +110,7 @@ async function goDownLoad() {
   // If the template exists, delete it first
   if (fs.existsSync(tmp)) rm.sync(tmp);
   // download template from github
-  download('direct:https://github.com/CuveeCui/pizza.git', tmp, { clone: true }, async err => {
+  download(`direct:${config.GIT_URl}`, tmp, { clone: true }, async err => {
     spinner.stop();
     if (err) logger.fatal(`Fail to download: ${err}`);
     try {
